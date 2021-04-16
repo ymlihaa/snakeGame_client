@@ -1,3 +1,5 @@
+// Bu component şuanda kullanılmıyor . Projenin bugları temizlendikten sonra componentlere parçalanacak .
+
 import React, { useState, useEffect } from "react";
 
 export default function JoinGame({ newGame, joinGame }) {
