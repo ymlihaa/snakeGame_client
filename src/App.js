@@ -29,6 +29,7 @@ function App() {
     // const ctx = canvas.getContext("2d");
     // setCanvas(canvas);
     // setCtx(ctx);
+    document.addEventListener("keydown", keydown);
   }, []);
 
   useEffect(() => {
@@ -62,11 +63,11 @@ function App() {
     canvas.width = canvas.height = 800;
 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    document.addEventListener("keydown", keydown);
     setGameActive(true);
   };
 
   const keydown = (e) => {
+    console.log(e.keyCode);
     socket.emit("keydown", e.keyCode);
   };
 
@@ -86,12 +87,16 @@ function App() {
     ctx.fillStyle = "yellow";
     ctx.fillRect(food.x * size, food.y * size, size, size);
 
-    paintPlayer(state.player[0], size, "green");
-    paintPlayer(state.player[1], size, "red");
+    paintPlayer(state.players[0], size, "green");
+    paintPlayer(state.players[1], size, "red");
   };
 
   const paintPlayer = (playerState, size, colour) => {
     const snake = playerState.snake;
+    let canvas, ctx;
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+    ctx = canvas.getContext("2d");
 
     ctx.fillStyle = colour;
     for (let cell of snake) {
@@ -147,11 +152,10 @@ function App() {
         <div class="container h-100">
           <div id="initialScreen" class="h-100">
             <div class="d-flex flex-column align-items-center justify-content-center h-100">
-              <h1>Multiplayer Snake</h1>
               <button
                 onClick={newGame}
                 type="submit"
-                class="btn btn-success"
+                class="btn btn-primary"
                 id="newGameButton"
               >
                 Create New Game
@@ -168,7 +172,7 @@ function App() {
               <button
                 onClick={joinGame}
                 type="submit"
-                class="btn btn-success"
+                class="btn btn-primary"
                 id="joinGameButton"
               >
                 Join Game
@@ -178,14 +182,13 @@ function App() {
           <div id="gameScreen" class="h-100">
             <div class="d-flex flex-column align-items-center justify-content-center h-100">
               <h1>
-                Your game code is:{" "}
-                <span id="gameCodeDisplay">{gameCodeDisplay}</span>
+                gameCode : <span id="gameCodeDisplay">{gameCodeDisplay}</span>
               </h1>
 
               <canvas id="canvas" ref={canvasRef}></canvas>
             </div>
           </div>
-          )}
+          )
         </div>
       </section>
     </div>
